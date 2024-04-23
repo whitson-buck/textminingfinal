@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ movie }} Details</title>
+</head>
+<body>
+    <h1>{{ movie }} Details</h1>
+    <h2>Metacritic Reviews</h2>
+    <ul>
+        {% for review in metacritic_reviews %}
+            <li>{{ review }}</li>
+        {% endfor %}
+    </ul>
+    <h2>IMDb Reviews</h2>
+    <ul>
+        {% for review in imdb_reviews %}
+            <li>{{ review }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Metacritic Sentiments</h2>
+    <ul>
+        {% for sentiment in metacritic_sentiments %}
+            <li>{{ sentiment }}</li>
+        {% endfor %}
+    </ul>
+    <h2>IMDb Sentiments</h2>
+    <ul>
+        {% for sentiment in imdb_sentiments %}
+            <li>{{ sentiment }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
