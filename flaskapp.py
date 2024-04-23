@@ -39,7 +39,9 @@ def analyze_sentiment(text):
 @app.route('/')
 def index():
     top_movies = scrape_imdb_top_movies()
-    return render_template('index.html', movies=top_movies)
+    movies_with_rank = [(rank + 1, movie) for rank, movie in enumerate(top_movies)]
+    return render_template('index.html', movies=movies_with_rank)
+
 
 @app.route('/movie/<movie>')
 def movie_details(movie):

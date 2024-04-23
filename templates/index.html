@@ -1,14 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Top Movies</title>
+    <title>Top IMDb Movies</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
-    <h1>Top Movies</h1>
-    <ul>
-        {% for movie in movies %}
-            <li><a href="/movie/{{ movie }}">{{ movie }}</a></li>
-        {% endfor %}
-    </ul>
+    <h1>Top IMDb Movies</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rank, movie in movies %}
+                <tr>
+                    <td>{{ rank }}</td>
+                    <td><a href="/movie/{{ movie }}">{{ movie }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
