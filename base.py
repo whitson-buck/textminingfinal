@@ -1,8 +1,10 @@
 import pandas as pd
-import os
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from fuzzywuzzy import process
 
-# List of file names
-file_names = [
+# List of file names for the wine reviews dataset
+review_file_names = [
     'Wine_Reviews_2022_12_10.csv',
     'Wine_Reviews_2023_01_16.csv',
     'Wine_Reviews_2023_03_09.csv',
@@ -17,23 +19,43 @@ file_names = [
     'Wine_Reviews_2024_04_15.csv'
 ]
 
-# Read each CSV file into a DataFrame and append to a list
-dfs = []
-for file_name in file_names:
+# Read each wine review CSV file into a DataFrame and append to a list
+review_dfs = []
+for file_name in review_file_names:
     df = pd.read_csv(file_name)
-    dfs.append(df)
+    review_dfs.append(df)
 
-# Concatenate all DataFrames into one
-combined_df = pd.concat(dfs, ignore_index=True)
+# Concatenate all wine review DataFrames into one
+combined_review_df = pd.concat(review_dfs, ignore_index=True)
 
-# Add columns for Review_name, Review_content, Date_of_review, and Type_of_wine
-combined_df['Review_name'] = combined_df['Unnamed: 0']
-combined_df['Review_content'] = combined_df['Unnamed: 1']
-combined_df['Date_of_review'] = combined_df['Unnamed: 2']
-combined_df['Type_of_wine'] = combined_df['Unnamed: 3']
+# Load the second dataset
+second_df = pd.read_csv('winemag-data-130k-v2.csv')
 
-# Drop unnecessary columns
-combined_df.drop(columns=['Unnamed: 0', 'Unnamed: 1', 'Unnamed: 2', 'Unnamed: 3'], inplace=True)
+# Extract wine names from both datasets
+wine_names_review = combined_review_df['Review_name'].unique()
+wine_names_second = second_df['title'].unique()
 
-# Display the combined DataFrame
-print(combined_df)
+# Calculate TF-IDF vectors for wine names
+vectorizer = TfidfVectorizer()
+tfidf_matrix = vectorizer.fit_transform(list(wine_names_review) + list(wine_names_second))
+
+# Calculate cosine similarity between TF-IDF vectors
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+# Match wine names based on closest cosine similarity
+matches = {}
+for i, wine_name in enumerate(wine_names_review):
+    # Find the index of the most similar wine name from the second dataset
+    most_similar_index = cosine_sim[i].argsort()[-1]
+    # Store the matched wine name and its similarity score
+    matches[wine_name] = (wine_names_second[most_similar_index], cosine_sim[i][most_similar_index])
+
+# Create a DataFrame to store the matched wine names and similarity scores
+matches_df = pd.DataFrame.from_dict(matches, orient='index', columns=['Matched_wine_name', 'Cosine_similarity'])
+
+# Reset the index of the DataFrame
+matches_df.reset_index(inplace=True)
+matches_df.rename(columns={'index': 'Review_name'}, inplace=True)
+
+# Display the DataFrame with matched wine names
+print(matches_df)
