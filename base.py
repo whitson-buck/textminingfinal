@@ -1,61 +1,78 @@
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from fuzzywuzzy import process
+from textblob import TextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from flask import Flask, request, render_template_string
 
-# List of file names for the wine reviews dataset
-review_file_names = [
-    'Wine_Reviews_2022_12_10.csv',
-    'Wine_Reviews_2023_01_16.csv',
-    'Wine_Reviews_2023_03_09.csv',
-    'Wine_Reviews_2023_06_17.csv',
-    'Wine_Reviews_2023_09_07.csv',
-    'Wine_Reviews_2023_10_05.csv',
-    'Wine_Reviews_2023_11_08.csv',
-    'Wine_Reviews_2023_12_17.csv',
-    'Wine_Reviews_2024_01_14.csv',
-    'Wine_Reviews_2024_02_11.csv',
-    'Wine_Reviews_2024_03_11.csv',
-    'Wine_Reviews_2024_04_15.csv'
+# Read expert and amateur data
+expert_data = pd.read_csv("winemag-data-130k-v2.csv")
+amateur_files = [
+    "Wine_Reviews_2022_12_10.csv",
+    "Wine_Reviews_2023_01_16.csv",
+    "Wine_Reviews_2023_03_09.csv",
+    "Wine_Reviews_2023_06_17.csv",
+    "Wine_Reviews_2023_09_07.csv",
+    "Wine_Reviews_2023_10_05.csv",
+    "Wine_Reviews_2023_11_08.csv",
+    "Wine_Reviews_2023_12_17.csv",
+    "Wine_Reviews_2024_01_14.csv",
+    "Wine_Reviews_2024_02_11.csv",
+    "Wine_Reviews_2024_03_11.csv",
+    "Wine_Reviews_2024_04_15.csv"
 ]
+amateur_data = pd.concat([pd.read_csv(file) for file in amateur_files])
 
-# Read each wine review CSV file into a DataFrame and append to a list
-review_dfs = []
-for file_name in review_file_names:
-    df = pd.read_csv(file_name)
-    review_dfs.append(df)
+# Merge amateur data into a single DataFrame
+amateur_data['Type_of_wine'] = amateur_data['Type_of_wine'].str.lower()
+amateur_data = amateur_data.groupby(['Type_of_wine']).agg({'Review_name': ' '.join, 'Review_content': ' '.join}).reset_index()
 
-# Concatenate all wine review DataFrames into one
-combined_review_df = pd.concat(review_dfs, ignore_index=True)
+# Fuzzy matching to link expert and amateur data
+def fuzzy_merge(df1, df2, key1, key2, threshold=90, limit=1):
+    df1[key1] = df1[key1].astype(str)
+    df2[key2] = df2[key2].astype(str)
+    matches = df1[key1].apply(lambda x: process.extract(x, df2[key2], limit=limit))
+    df1['matches'] = matches
+    df1['matches'] = df1['matches'].apply(lambda x: x[0] if len(x) > 0 else None)
+    return df1
 
-# Load the second dataset
-second_df = pd.read_csv('winemag-data-130k-v2.csv')
+expert_data['matches'] = None
+merged_data = fuzzy_merge(expert_data, amateur_data, 'title', 'Type_of_wine')
 
-# Extract wine names from both datasets
-wine_names_review = combined_review_df['Review_name'].unique()
-wine_names_second = second_df['title'].unique()
+# Sentiment analysis
+def analyze_sentiment(text):
+    blob = TextBlob(text)
+    sentiment_textblob = blob.sentiment.polarity
+    analyzer = SentimentIntensityAnalyzer()
+    sentiment_vader = analyzer.polarity_scores(text)['compound']
+    return sentiment_textblob, sentiment_vader
 
-# Calculate TF-IDF vectors for wine names
-vectorizer = TfidfVectorizer()
-tfidf_matrix = vectorizer.fit_transform(list(wine_names_review) + list(wine_names_second))
+merged_data['sentiment_textblob'], merged_data['sentiment_vader'] = zip(*merged_data['Review_content'].apply(analyze_sentiment))
 
-# Calculate cosine similarity between TF-IDF vectors
-cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+# Flask app
+app = Flask(__name__)
 
-# Match wine names based on closest cosine similarity
-matches = {}
-for i, wine_name in enumerate(wine_names_review):
-    # Find the index of the most similar wine name from the second dataset
-    most_similar_index = cosine_sim[i].argsort()[-1]
-    # Store the matched wine name and its similarity score
-    matches[wine_name] = (wine_names_second[most_similar_index], cosine_sim[i][most_similar_index])
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    if request.method == 'POST':
+        selected_wine = request.form['wine']
+        wine_data = merged_data[merged_data['title'] == selected_wine]
+        return render_template_string('''<h2>{{ title }}</h2>
+                                        <p><strong>Sentiment (TextBlob):</strong> {{ sentiment_textblob }}</p>
+                                        <p><strong>Sentiment (VADER):</strong> {{ sentiment_vader }}</p>''',
+                                        title=selected_wine,
+                                        sentiment_textblob=wine_data['sentiment_textblob'].iloc[0],
+                                        sentiment_vader=wine_data['sentiment_vader'].iloc[0])
+    else:
+        wines = merged_data['title'].unique().tolist()
+        return render_template_string('''<form method="post">
+                                        <select name="wine">
+                                        {% for wine in wines %}
+                                        <option value="{{ wine }}">{{ wine }}</option>
+                                        {% endfor %}
+                                        </select>
+                                        <input type="submit" value="Submit">
+                                        </form>''', wines=wines)
 
-# Create a DataFrame to store the matched wine names and similarity scores
-matches_df = pd.DataFrame.from_dict(matches, orient='index', columns=['Matched_wine_name', 'Cosine_similarity'])
+if __name__ == '__main__':
+    app.run(debug=True)
 
-# Reset the index of the DataFrame
-matches_df.reset_index(inplace=True)
-matches_df.rename(columns={'index': 'Review_name'}, inplace=True)
-
-# Display the DataFrame with matched wine names
-print(matches_df)
