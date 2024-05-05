@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Reviews</title>
+</head>
+<body>
+    <h1>Select a Wine:</h1>
+    <form action="/analyze" method="post">
+        <select name="category">
+            {% for item in data %}
+                <option value="{{ item.name }}">{{ item.name }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Analyze</button>
+    </form>
+</body>
+</html>

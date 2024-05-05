@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+</head>
+<body>
+    <h1>Analysis Result for {{ category }}</h1>
+    <table border="1">
+        <tr>
+            <th>Title</th>
+            <th>Expert Description</th>
+            <th>TextBlob Polarity</th>
+            <th>VADER Polarity</th>
+            <th>AFINN Score</th>
+        </tr>
+        {% for item in selected_data %}
+            <tr>
+                <td>{{ item['reviews.title'] }}</td>
+                <td>{{ item['expert_description'] }}</td>
+                <td>{{ textblob_sentiments[loop.index0].polarity }}</td>
+                <td>{{ vader_sentiments[loop.index0]['compound'] }}</td>
+                <td>{{ afinn_sentiments[loop.index0] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
