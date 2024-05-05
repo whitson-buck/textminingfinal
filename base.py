@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request
 import csv
 from flask import Flask, render_template, request
 from textblob import TextBlob
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from afinn import Afinn
+import nltk
+nltk.download('vader_lexicon')
 
 app = Flask(__name__)
 
