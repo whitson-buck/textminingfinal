@@ -5,21 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top Words</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+    .word-item {
+        padding-left: 20px;
+    }
+    </style>
 </head>
 <body>
     <h1>Top Words Used by Experts and Amateurs</h1>
 
     <h2>Top Words Used by Experts:</h2>
     <ul>
-        {% for word, count in top_ten_expert_words %}
-            <li>{{ word }}: {{ count }}</li>
+        {% for word, count in top_ten_expert %}
+            <li class="word-item">{{ word }}: {{ count }}</li>
         {% endfor %}
     </ul>
 
     <h2>Top Words Used by Amateurs:</h2>
     <ul>
-        {% for word, count in top_ten_amateur_words %}
-            <li>{{ word }}: {{ count }}</li>
+        {% for word, count in top_ten_amateur %}
+            <li class="word-item">{{ word }}: {{ count }}</li>
         {% endfor %}
     </ul>
 </body>

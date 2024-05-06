@@ -38,6 +38,17 @@ h2 {
 
 .top-words-list {
     margin-top: 20px;
+    padding: 0;
+}
+
+.top-words-list li {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.top-words-list li::before {
+    content: counter(item) ") ";
+    counter-increment: item;
 }
 
 /* Styling for expert and amateur words */

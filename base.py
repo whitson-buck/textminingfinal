@@ -96,10 +96,7 @@ def top_words():
     # Get top ten words for experts and amateurs
     top_ten_expert_words = expert_word_counts.most_common(10)
     top_ten_amateur_words = amateur_word_counts.most_common(10)
-
-    print("Top ten expert words:", top_ten_expert_words)
-    print("Top ten amateur words:", top_ten_amateur_words)
-
+    
     return render_template('top_words.html', top_ten_expert=top_ten_expert_words, top_ten_amateur=top_ten_amateur_words)
 
 if __name__ == '__main__':
