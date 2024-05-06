@@ -6,55 +6,81 @@
     <title>Top Words</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
-    .word-item {
-        padding-left: 20px;
-    }
+        /* Body styles */
+        body {
+            font-family: Georgia, serif;
+            background-color: lightblue;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container styles */
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header styles */
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* List item styles */
+        .word-item {
+            padding-left: 20px;
+        }
+
         /* Button styles */
-    .return-button {
-        position: fixed;
-        top: 15px;
-        right: 15px;
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-    }
+        .return-button {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
 
-    .return-button:hover {
-        background-color: #0056b3;
-    }
-
-    body {
-    background-color: lightblue; /* Change the background color here */
-    }
-
+        .return-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <form action="/" method="get" class="return-button">
         <button type="submit">Return to Home</button>
     </form>
-    <h1>Top Words Used by Experts and Amateurs</h1>
+    <div class="container">
+        <h1>Top Words Used by Experts and Amateurs</h1>
 
-    <h2>Top Words Used by Experts:</h2>
-    <ul>
-        {% for word, count in top_ten_expert %}
-            <li class="word-item">{{ word }}: {{ count }}</li>
-        {% endfor %}
-    </ul>
-    <li class="word-item">Total Words Used by Experts: <b>{{ total_expert_words }}</b></li>
-    <li class="word-item"> Overall Sentiment (Experts): {{ expert_sentiments }}</li>
+        <h2>Top Words Used by Experts:</h2>
+        <ul>
+            {% for word, count in top_ten_expert %}
+                <li class="word-item">{{ word }}: {{ count }}</li>
+            {% endfor %}
+        </ul>
+        <p class="word-item"><strong>Total Words Used by Experts:</strong> {{ total_expert_words }}</p>
+        <p class="word-item"><strong>Overall Sentiment (Experts):</strong> {{ expert_sentiments }}</p>
 
-    <h2>Top Words Used by Amateurs:</h2>
-    <ul>
-        {% for word, count in top_ten_amateur %}
-            <li class="word-item">{{ word }}: {{ count }}</li>
-        {% endfor %}
-    </ul>
-    <li class="word-item">Total Words Used by Amateurs: <b>{{ total_amateur_words }}</b></li>
-    <li class="word-item">Overall Sentiment (Amateurs): {{ amateur_sentiments }}</li>
+        <h2>Top Words Used by Amateurs:</h2>
+        <ul>
+            {% for word, count in top_ten_amateur %}
+                <li class="word-item">{{ word }}: {{ count }}</li>
+            {% endfor %}
+        </ul>
+        <p class="word-item"><strong>Total Words Used by Amateurs:</strong> {{ total_amateur_words }}</p>
+        <p class="word-item"><strong>Overall Sentiment (Amateurs):</strong> {{ amateur_sentiments }}</p>
+    </div>
 </body>
 </html>
