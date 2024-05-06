@@ -40,8 +40,8 @@
             <li class="word-item">{{ word }}: {{ count }}</li>
         {% endfor %}
     </ul>
-    <p>Total Words Used by Experts: {{ total_expert_words }}</p>
-    <p>Overall Sentiment (Experts): {{ expert_sentiments }}</p>
+    <li class="word-item">Total Words Used by Experts: <b>{{ total_expert_words }}</b></li>
+    <li class="word-item"> Overall Sentiment (Experts): {{ expert_sentiments }}</li>
 
     <h2>Top Words Used by Amateurs:</h2>
     <ul>
@@ -49,7 +49,7 @@
             <li class="word-item">{{ word }}: {{ count }}</li>
         {% endfor %}
     </ul>
-    <p>Total Words Used by Amateurs: {{ total_amateur_words }}</p>
-    <p>Overall Sentiment (Amateurs): {{ amateur_sentiments }}</p>
+    <li class="word-item">Total Words Used by Amateurs: <b>{{ total_amateur_words }}</b></li>
+    <li class="word-item">Overall Sentiment (Amateurs): {{ amateur_sentiments }}</li>
 </body>
 </html>
