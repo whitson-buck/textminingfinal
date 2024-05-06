@@ -5,16 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wine Reviews</title>
     <style>
-        /* Style for the button */
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f8f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button styles */
         .return-button {
             position: fixed;
             top: 15px;
             right: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
         }
+
+        .return-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Heading styles */
+        h1, h2, h3, h4 {
+            margin-bottom: 15px;
+        }
+
+        /* List styles */
+        ol, ul {
+            list-style-type: none;
+            margin-left: 0;
+            padding-left: 20px;
+        }
+
+        ol li {
+            counter-increment: myCounter;
+            margin-bottom: 10px;
+        }
+
+        ol li::before {
+            content: "(" counter(myCounter) ") ";
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        /* Conclusion styles */
         .conclusion {
             font-size: x-large;
             font-weight: bold;
             text-decoration: underline;
+            color: #007bff;
         }
     </style>
 </head>
@@ -22,69 +86,72 @@
     <form action="/" method="get" class="return-button">
         <button type="submit">Return to Home</button>
     </form>
-    <h1>Wine Category: {{ selected_category }}</h1>
-    
-    <h2>Amateur Reviews:</h2>
-    <ul>
-        {% for review in amateur_reviews['reviews.text'] %}
-            <li>{{ review }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Wine Category: {{ selected_category }}</h1>
+        
+        <h2>Amateur Reviews:</h2>
+        <ol>
+            {% for review in amateur_reviews['reviews.text'] %}
+                <li>{{ review }}</li>
+            {% endfor %}
+        </ol>
 
-    <h2>Expert Reviews:</h2>
-    <ul>
-        {% for description in expert_reviews['expert_description'] %}
-            <li>{{ description }}</li>
-        {% endfor %}
-    </ul>
+        <h2>Expert Reviews:</h2>
+        <ul>
+            {% for description in expert_reviews['expert_description'] %}
+                <li>{{ description }}</li>
+            {% endfor %}
+        </ul>
 
-    <h2>Difference between Amateur and Expert Sentiments:</h2>
-    <p>{{ difference }}</p>
+        <h2>Difference between Amateur and Expert Sentiments:</h2>
+        <p>{{ difference }}</p>
+        <br>
 
-    <h3>Conclusion:</h3>
-    <div class="conclusion">
-        {{ result }}
-    </div>
+        <h3>Conclusion:</h3>
+        <div class="conclusion" style="color: {% if difference < 0 %}green{% else %}blue{% endif %}">
+            {{ result }}
+        </div>
+        <br>
 
-    <h4>Amateur TextBlob Sentiments:</h3>
-    <ul>
-        {% for sentiment in amateur_textblob_sentiments %}
-            <li>{{ sentiment }}</li>
-        {% endfor %}
-    </ul>
-    <h4>Amateur VADER Sentiments:</h3>
-    <ul>
-        {% for sentiment in amateur_vader_sentiments %}
-            <li>{{ sentiment }}</li>
-        {% endfor %}
-    </ul>
-    <h4>Amateur Afinn Sentiments:</h3>
+        <h4>Amateur TextBlob Sentiments:</h4>
+        <ul>
+            {% for sentiment in amateur_textblob_sentiments %}
+                <li>{{ sentiment }}</li>
+            {% endfor %}
+        </ul>
+        <h4>Amateur VADER Sentiments:</h4>
+        <ul>
+            {% for sentiment in amateur_vader_sentiments %}
+                <li>{{ sentiment }}</li>
+            {% endfor %}
+        </ul>
+        <h4>Amateur Afinn Sentiments:</h4>
         <ul>
             {% for sentiment in amateur_afinn_sentiments %}
                 <li>{{ sentiment }}</li>
             {% endfor %}
         </ul>
-    
-    <h4>Expert TextBlob Sentiments:</h3>
-    <ul>
-        {% for sentiment in expert_textblob_sentiments %}
-            <li>{{ sentiment }}</li>
-        {% endfor %}
-    </ul>
         
-    <h4>Expert VADER Sentiments:</h3>
-    <ul>
-        {% for sentiment in expert_vader_sentiments %}
-            <li>{{ sentiment }}</li>
-        {% endfor %}
-    </ul>
+        <h4>Expert TextBlob Sentiments:</h4>
+        <ul>
+            {% for sentiment in expert_textblob_sentiments %}
+                <li>{{ sentiment }}</li>
+            {% endfor %}
+        </ul>
+            
+        <h4>Expert VADER Sentiments:</h4>
+        <ul>
+            {% for sentiment in expert_vader_sentiments %}
+                <li>{{ sentiment }}</li>
+            {% endfor %}
+        </ul>
 
-    <h4>Expert Afinn Sentiments:</h3>
-    <ul>
-        {% for sentiment in expert_afinn_sentiments %}
-            <li>{{ sentiment }}</li>
-        {% endfor %}
-    </ul>
-
+        <h4>Expert Afinn Sentiments:</h4>
+        <ul>
+            {% for sentiment in expert_afinn_sentiments %}
+                <li>{{ sentiment }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
