@@ -4,8 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wine Reviews</title>
+    <style>
+        /* Style for the button */
+        .return-button {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+        }
+        .conclusion {
+            font-size: x-large;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
+    <form action="/" method="get" class="return-button">
+        <button type="submit">Return to Home</button>
+    </form>
     <h1>Wine Category: {{ selected_category }}</h1>
     
     <h2>Amateur Reviews:</h2>
@@ -14,6 +30,22 @@
             <li>{{ review }}</li>
         {% endfor %}
     </ul>
+
+    <h2>Expert Reviews:</h2>
+    <ul>
+        {% for description in expert_reviews['expert_description'] %}
+            <li>{{ description }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Difference between Amateur and Expert Sentiments:</h2>
+    <p>{{ difference }}</p>
+
+    <h3>Conclusion:</h3>
+    <div class="conclusion">
+        {{ result }}
+    </div>
+
     <h4>Amateur TextBlob Sentiments:</h3>
     <ul>
         {% for sentiment in amateur_textblob_sentiments %}
@@ -33,12 +65,6 @@
             {% endfor %}
         </ul>
     
-    <h2>Expert Reviews:</h2>
-    <ul>
-        {% for description in expert_reviews['expert_description'] %}
-            <li>{{ description }}</li>
-        {% endfor %}
-    </ul>
     <h4>Expert TextBlob Sentiments:</h3>
     <ul>
         {% for sentiment in expert_textblob_sentiments %}
@@ -59,13 +85,6 @@
             <li>{{ sentiment }}</li>
         {% endfor %}
     </ul>
-    
-
-    <h2>Difference between Amateur and Expert Sentiments:</h2>
-    <p>{{ difference }}</p>
-
-    <h3>Conclusion:</h3>
-    <p>{{ result }}</p>
 
 </body>
 </html>
