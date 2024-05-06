@@ -100,8 +100,8 @@ def top_words():
     total_words_expert = sum(len(text.split()) for text in expert_word_counts)
     total_words_amateur = sum(len(text.split()) for text in amateur_word_counts)
 
-    expert_review_count = data['expert_description'].dropna().count()
-    amateur_review_count = data['reviews.text'].dropna().count()
+    expert_review_count = len(set(data['expert_description'].dropna()))
+    amateur_review_count = len(set(data['reviews.text'].dropna()))
 
     wpr_expert = round(total_words_expert / expert_review_count,2) if expert_review_count > 0 else 0
 
