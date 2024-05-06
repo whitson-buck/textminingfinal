@@ -39,7 +39,7 @@ def analyze():
 
     # Perform sentiment analysis on both amateur and expert reviews
     amateur_reviews = selected_data.dropna(subset=['reviews.text'])
-    expert_reviews = selected_data.dropna(subset=['expert_description'])
+    expert_reviews = selected_data.dropna(subset=['expert_description']).head(1)
 
     amateur_textblob_sentiments = [TextBlob(review).sentiment for review in amateur_reviews['reviews.text']]
     amateur_vader_sentiments = [sid.polarity_scores(review) for review in amateur_reviews['reviews.text']]
