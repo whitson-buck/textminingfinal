@@ -3,27 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analysis Result</title>
+    <title>Wine Reviews</title>
 </head>
 <body>
-    <h1>Analysis Result for {{ category }}</h1>
-    <table border="1">
-        <tr>
-            <th>Title</th>
-            <th>Expert Description</th>
-            <th>TextBlob Polarity</th>
-            <th>VADER Polarity</th>
-            <th>AFINN Score</th>
-        </tr>
-        {% for item in selected_data %}
-            <tr>
-                <td>{{ item['reviews.title'] }}</td>
-                <td>{{ item['expert_description'] }}</td>
-                <td>{{ textblob_sentiments[loop.index0].polarity }}</td>
-                <td>{{ vader_sentiments[loop.index0]['compound'] }}</td>
-                <td>{{ afinn_sentiments[loop.index0] }}</td>
-            </tr>
+    <h1>Wine Category: {{ selected_category }}</h1>
+    
+    <h2>Amateur Reviews:</h2>
+    <ul>
+        {% for review in amateur_reviews['reviews.text'] %}
+            <li>{{ review }}</li>
         {% endfor %}
-    </table>
+    </ul>
+    <h3>Amateur TextBlob Sentiments:</h3>
+    <ul>
+        {% for sentiment in amateur_textblob_sentiments %}
+            <li>{{ sentiment }}</li>
+        {% endfor %}
+    </ul>
+    <!-- Repeat similar sections for other sentiment analysis results -->
+    
+    <h2>Expert Reviews:</h2>
+    <ul>
+        {% for description in expert_reviews['expert_description'] %}
+            <li>{{ description }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Expert TextBlob Sentiments:</h3>
+    <ul>
+        {% for sentiment in expert_textblob_sentiments %}
+            <li>{{ sentiment }}</li>
+        {% endfor %}
+    </ul>
+    <!-- Repeat similar sections for other sentiment analysis results -->
 </body>
 </html>

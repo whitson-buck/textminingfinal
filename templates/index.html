@@ -6,11 +6,11 @@
     <title>Wine Reviews</title>
 </head>
 <body>
-    <h1>Select a Wine:</h1>
+    <h1>Select a Wine Category:</h1>
     <form action="/analyze" method="post">
         <select name="category">
-            {% for item in data %}
-                <option value="{{ item.name }}">{{ item.name }}</option>
+            {% for category in wine_categories %}
+                <option value="{{ category }}">{{ category }}</option>
             {% endfor %}
         </select>
         <button type="submit">Analyze</button>
