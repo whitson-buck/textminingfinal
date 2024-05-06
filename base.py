@@ -100,6 +100,13 @@ def top_words():
     total_words_expert = sum(len(text.split()) for text in expert_word_counts)
     total_words_amateur = sum(len(text.split()) for text in amateur_word_counts)
 
+    expert_review_count = data['expert_description'].dropna().count()
+    amateur_review_count = data['reviews.text'].dropna().count()
+
+    wpr_expert = round(total_words_expert / expert_review_count,2) if expert_review_count > 0 else 0
+
+    wpr_amateur = round(total_words_amateur / amateur_review_count,2) if amateur_review_count > 0 else 0
+
     # Get top ten words for experts and amateurs
     top_ten_expert_words = expert_word_counts.most_common(10)
     top_ten_amateur_words = amateur_word_counts.most_common(10)
@@ -108,12 +115,17 @@ def top_words():
     expert_sentiments = sid.polarity_scores(' '.join(data['expert_description'].dropna()))
     amateur_sentiments = sid.polarity_scores(' '.join(data['reviews.text'].dropna()))
 
-    return render_template('top_words.html', top_ten_expert=top_ten_expert_words,
+    return render_template('top_words.html', 
+                           top_ten_expert=top_ten_expert_words,
                            top_ten_amateur=top_ten_amateur_words,
-                           total_expert_words=total_words_expert,
-                           total_amateur_words=total_words_amateur,
+                           total_words_expert=total_words_expert,
+                           total_words_amateur=total_words_amateur,
+                           expert_review_count=expert_review_count,
+                           amateur_review_count=amateur_review_count,
                            expert_sentiments=expert_sentiments,
-                           amateur_sentiments=amateur_sentiments)
+                           amateur_sentiments=amateur_sentiments,
+                           wpr_expert=wpr_expert,
+                           wpr_amateur=wpr_amateur)
 if __name__ == '__main__':
     app.run(debug=True)
 

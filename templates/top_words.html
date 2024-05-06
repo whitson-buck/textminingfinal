@@ -70,7 +70,8 @@
                 <li class="word-item">{{ word }}: {{ count }}</li>
             {% endfor %}
         </ul>
-        <p class="word-item"><strong>Total Words Used by Experts:</strong> {{ total_expert_words }}</p>
+        <p class="word-item"><strong>Total Words Used by Experts:</strong> {{ total_words_expert }}</p>
+        <p class="word-item"><strong>Words per review for Experts:</strong> {{ wpr_expert }}</p>
         <p class="word-item"><strong>Overall Sentiment (Experts):</strong> {{ expert_sentiments }}</p>
 
         <h2>Top Words Used by Amateurs:</h2>
@@ -79,7 +80,8 @@
                 <li class="word-item">{{ word }}: {{ count }}</li>
             {% endfor %}
         </ul>
-        <p class="word-item"><strong>Total Words Used by Amateurs:</strong> {{ total_amateur_words }}</p>
+        <p class="word-item"><strong>Total Words Used by Amateurs:</strong> {{ total_words_amateur }}</p>
+        <p class="word-item"><strong>Words per review for Amateurs:</strong> {{ wpr_amateur }}</p>
         <p class="word-item"><strong>Overall Sentiment (Amateurs):</strong> {{ amateur_sentiments }}</p>
     </div>
 </body>
