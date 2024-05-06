@@ -67,11 +67,19 @@
             font-size: 14px; /* Adjust the font size as needed */
         }
 
+        .footer {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Wine Reviews</h1>
+        <h1>Wine Reviews Applet 🍷</h1>
         <form action="/analyze" method="post">
             <select name="category">
                 {% for category in wine_categories %}
@@ -83,6 +91,10 @@
         </form>
         <br>
         <a href="/top_words" class="top-words-link">Summary Statistics</a>
+    </div>
+
+    <div class="footer">
+        <i>Created by Whitson Buck</i>
     </div>
 </body>
 </html>
