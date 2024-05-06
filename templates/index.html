@@ -57,6 +57,16 @@
         .button:hover {
             background-color: #0056b3;
         }
+        /* Adjust font size for the "Analyze" button */
+        .analyze-button {
+            font-size: 24px; /* Adjust the font size as needed */
+        }
+
+        /* Adjust font size for the "Top Words" link */
+        .top-words-link {
+            font-size: 14px; /* Adjust the font size as needed */
+        }
+
     </style>
 </head>
 <body>
@@ -68,11 +78,11 @@
                     <option value="{{ category }}">{{ category }}</option>
                 {% endfor %}
             </select>
-            <button class="button" type="submit">Go</button>
+            <button class="analyze-button" type="submit">Go</button>
             <br>
         </form>
         <br>
-        <a href="/top_words" class="button">Summary Statistics</a>
+        <a href="/top_words" class="top-words-link">Summary Statistics</a>
     </div>
 </body>
 </html>
