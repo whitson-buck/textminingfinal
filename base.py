@@ -42,12 +42,21 @@ def analyze():
     expert_reviews = selected_data.dropna(subset=['expert_description']).head(1)
 
     amateur_textblob_sentiments = [TextBlob(review).sentiment for review in amateur_reviews['reviews.text']]
-    amateur_vader_sentiments = [sid.polarity_scores(review) for review in amateur_reviews['reviews.text']]
+    amateur_vader_sentiments = [sid.polarity_scores(review)['compound'] for review in amateur_reviews['reviews.text']]
     amateur_afinn_sentiments = [afinn.score(review) for review in amateur_reviews['reviews.text']]
 
     expert_textblob_sentiments = [TextBlob(description).sentiment for description in expert_reviews['expert_description']]
-    expert_vader_sentiments = [sid.polarity_scores(description) for description in expert_reviews['expert_description']]
+    expert_vader_sentiments = [sid.polarity_scores(description)['compound'] for description in expert_reviews['expert_description']]
     expert_afinn_sentiments = [afinn.score(description) for description in expert_reviews['expert_description']]
+
+    # Calculate average sentiment scores
+    amateur_average = sum(amateur_vader_sentiments) / len(amateur_vader_sentiments) if amateur_vader_sentiments else 0
+    expert_average = sum(expert_vader_sentiments) / len(expert_vader_sentiments) if expert_vader_sentiments else 0
+
+    # Calculate difference between average sentiment scores
+    difference = amateur_average - expert_average
+
+    result = "Amateurs enjoy more" if difference > 0 else "Experts enjoy more" if difference < 0 else "Both enjoy equally"
 
     return render_template('result.html', selected_category=selected_category,
                            amateur_reviews=amateur_reviews, expert_reviews=expert_reviews,
@@ -56,6 +65,7 @@ def analyze():
                            amateur_afinn_sentiments=amateur_afinn_sentiments,
                            expert_textblob_sentiments=expert_textblob_sentiments,
                            expert_vader_sentiments=expert_vader_sentiments,
-                           expert_afinn_sentiments=expert_afinn_sentiments)
+                           expert_afinn_sentiments=expert_afinn_sentiments, result=result,
+                           difference=difference)
 if __name__ == '__main__':
     app.run(debug=True)
