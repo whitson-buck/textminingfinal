@@ -9,9 +9,29 @@
     .word-item {
         padding-left: 20px;
     }
+        /* Button styles */
+    .return-button {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    .return-button:hover {
+        background-color: #0056b3;
+    }
     </style>
 </head>
 <body>
+    <form action="/" method="get" class="return-button">
+        <button type="submit">Return to Home</button>
+    </form>
     <h1>Top Words Used by Experts and Amateurs</h1>
 
     <h2>Top Words Used by Experts:</h2>
@@ -20,6 +40,8 @@
             <li class="word-item">{{ word }}: {{ count }}</li>
         {% endfor %}
     </ul>
+    <p>Total Words Used by Experts: {{ total_expert_words }}</p>
+    <p>Overall Sentiment (Experts): {{ expert_sentiments }}</p>
 
     <h2>Top Words Used by Amateurs:</h2>
     <ul>
@@ -27,5 +49,7 @@
             <li class="word-item">{{ word }}: {{ count }}</li>
         {% endfor %}
     </ul>
+    <p>Total Words Used by Amateurs: {{ total_amateur_words }}</p>
+    <p>Overall Sentiment (Amateurs): {{ amateur_sentiments }}</p>
 </body>
 </html>

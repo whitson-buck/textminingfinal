@@ -96,9 +96,24 @@ def top_words():
     # Get top ten words for experts and amateurs
     top_ten_expert_words = expert_word_counts.most_common(10)
     top_ten_amateur_words = amateur_word_counts.most_common(10)
-    
-    return render_template('top_words.html', top_ten_expert=top_ten_expert_words, top_ten_amateur=top_ten_amateur_words)
 
+    total_words_expert = sum(len(text.split()) for text in expert_word_counts)
+    total_words_amateur = sum(len(text.split()) for text in amateur_word_counts)
+
+    # Get top ten words for experts and amateurs
+    top_ten_expert_words = expert_word_counts.most_common(10)
+    top_ten_amateur_words = amateur_word_counts.most_common(10)
+
+    sid = SentimentIntensityAnalyzer()
+    expert_sentiments = sid.polarity_scores(' '.join(data['expert_description'].dropna()))
+    amateur_sentiments = sid.polarity_scores(' '.join(data['reviews.text'].dropna()))
+
+    return render_template('top_words.html', top_ten_expert=top_ten_expert_words,
+                           top_ten_amateur=top_ten_amateur_words,
+                           total_expert_words=total_words_expert,
+                           total_amateur_words=total_words_amateur,
+                           expert_sentiments=expert_sentiments,
+                           amateur_sentiments=amateur_sentiments)
 if __name__ == '__main__':
     app.run(debug=True)
 
