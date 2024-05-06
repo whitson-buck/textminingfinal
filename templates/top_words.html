@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Words</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Top Words Used by Experts and Amateurs</h1>
+
+    <h2>Top Words Used by Experts:</h2>
+    <ul>
+        {% for word, count in top_ten_expert_words %}
+            <li>{{ word }}: {{ count }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Top Words Used by Amateurs:</h2>
+    <ul>
+        {% for word, count in top_ten_amateur_words %}
+            <li>{{ word }}: {{ count }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,50 @@
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+/* Specific styles */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #007bff;
+    margin-top: 40px;
+}
+
+.top-words-list {
+    margin-top: 20px;
+}
+
+/* Styling for expert and amateur words */
+.expert-word {
+    color: #28a745; /* Green color */
+}
+
+.amateur-word {
+    color: #007bff; /* Blue color */
+}

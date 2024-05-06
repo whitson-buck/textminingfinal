@@ -5,7 +5,11 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from afinn import Afinn
 import nltk
 import pandas as pd
+from collections import Counter
+from nltk.corpus import stopwords
 nltk.download('vader_lexicon')
+nltk.download('punkt')
+nltk.download('stopwords')
 
 app = Flask(__name__)
 
@@ -67,5 +71,38 @@ def analyze():
                            expert_vader_sentiments=expert_vader_sentiments,
                            expert_afinn_sentiments=expert_afinn_sentiments, result=result,
                            difference=difference)
+
+
+@app.route('/top_words')
+def top_words():
+    # Tokenize and remove stop words
+    stop_words = set(stopwords.words('english'))
+
+    expert_words = []
+    amateur_words = []
+
+    for expert_review in data['expert_description'].dropna():
+        words = nltk.word_tokenize(expert_review.lower())
+        expert_words.extend([word for word in words if word.isalpha() and word not in stop_words])
+
+    for amateur_review in data['reviews.text'].dropna():
+        words = nltk.word_tokenize(amateur_review.lower())
+        amateur_words.extend([word for word in words if word.isalpha() and word not in stop_words])
+
+    # Count occurrences of words
+    expert_word_counts = Counter(expert_words)
+    amateur_word_counts = Counter(amateur_words)
+
+    # Get top ten words for experts and amateurs
+    top_ten_expert_words = expert_word_counts.most_common(10)
+    top_ten_amateur_words = amateur_word_counts.most_common(10)
+
+    print("Top ten expert words:", top_ten_expert_words)
+    print("Top ten amateur words:", top_ten_amateur_words)
+
+    return render_template('top_words.html', top_ten_expert=top_ten_expert_words, top_ten_amateur=top_ten_amateur_words)
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+
