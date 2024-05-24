@@ -127,6 +127,6 @@ def top_words():
                            wpr_expert=wpr_expert,
                            wpr_amateur=wpr_amateur)
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000)
 
 

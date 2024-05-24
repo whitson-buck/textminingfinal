@@ -30,7 +30,7 @@
         /* Header styles */
         h1 {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         /* List item styles */
@@ -62,6 +62,7 @@
         <button type="submit">Return to Home</button>
     </form>
     <div class="container">
+        
         <h1>Top Words Used by Experts and Amateurs</h1>
 
         <h2>Top Words Used by Experts:</h2>
@@ -70,9 +71,9 @@
                 <li class="word-item">{{ word }}: {{ count }}</li>
             {% endfor %}
         </ul>
-        <h3 class="word-item"><strong>Total Words Used by Experts:</strong> {{ total_words_expert }}</h3>
-        <h3 class="word-item"><strong>Words per review for Experts:</strong> {{ wpr_expert }}</h3>
-        <h3 class="word-item"><strong>Overall Sentiment:</strong> {{ expert_sentiments }}</h3>
+        <p class="word-item"><strong>Total Words Used by Experts:</strong> {{ total_words_expert }}</p>
+        <p class="word-item"><strong>Words per review for Experts:</strong> {{ wpr_expert }}</p>
+        <p class="word-item">Overall Sentiment: {{ expert_sentiments }}</p>
 
         <h2>Top Words Used by Amateurs:</h2>
         <ul>
@@ -80,9 +81,9 @@
                 <li class="word-item">{{ word }}: {{ count }}</li>
             {% endfor %}
         </ul>
-        <h3 class="word-item"><strong>Total Words Used by Amateurs:</strong> {{ total_words_amateur }}</h3>
-        <h3 class="word-item"><strong>Words per review for Amateurs:</strong> {{ wpr_amateur }}</h3>
-        <h3 class="word-item"><strong>Overall Sentiment:</strong> {{ amateur_sentiments }}</h3>
+        <p class="word-item"><strong>Total Words Used by Amateurs:</strong> {{ total_words_amateur }}</p>
+        <p class="word-item"><strong>Words per review for Amateurs:</strong> {{ wpr_amateur }}</p>
+        <p class="word-item">Overall Sentiment: {{ amateur_sentiments }}</p>
     </div>
 </body>
 </html>
