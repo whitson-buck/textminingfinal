@@ -18,7 +18,8 @@ Welcome to the Wine Sentiment Analysis Project! I'm on a quest to unravel the ju
 
 4. **Flask Fiesta:**
    - Create nifty Flask web app to compare sentiments and uncover hidden gems.
-   - 
+   - index.html and other landing pages are in the templates folder.
 
 5. **User Interaction Galore:**
-   - Users can swirl, sniff, and sip through sentiments, exploring trends and uncovering surprises at 
+   - Users can swirl, sniff, and sip through sentiments, exploring trends and uncovering surprises at whittybuck.pythonanywhere.com
+   - future note: I am cheap and don't want to pay for hosting, so if the website is down message me here to let me know and I can refresh the site.
