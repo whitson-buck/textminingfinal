@@ -6,6 +6,7 @@ Welcome to the Wine Sentiment Analysis Project! I'm on a quest to unravel the ju
 
 1. **Data Grapevine:**
    - Raid Kaggle for two datasets: one from wine aficionados and another from enthusiastic sippers.
+   - The winemag csv is 'expert' data and winereviews is 'amateur' data. First obviously comes from wine magazine, and the second comes from 
 
 2. **Data Cleanup Dance:**
    - Scrub, sort, and standardize data like a meticulous sommelier at a wine tasting. (No 1:1 wine relationship -- used fuzzy join)
