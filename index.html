@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Reviews</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Georgia, serif;
+            background-image: url('https://www.qantas.com/content/dam/travelinsider/images/explore/australia/wineries-cellar-doors-to-visit-in-australia/australian-vineyard.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center; /* Center align content */
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        select {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px; /* Add some space below the select */
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        select:focus {
+            border-color: #007bff; /* Change border color on focus */
+            outline: none; /* Remove default focus outline */
+        }
+        .button {
+            width: 200px;
+            margin: 0 auto; /* Center the button */
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        /* Adjust font size for the "Analyze" button */
+        .analyze-button {
+            font-size: 24px; /* Adjust the font size as needed */
+        }
+
+        /* Adjust font size for the "Top Words" link */
+        .top-words-link {
+            font-size: 14px; /* Adjust the font size as needed */
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Wine Reviews Applet 🍷</h1>
+        <form action="/analyze" method="post">
+            <select name="category">
+                {% for category in wine_categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+            <button class="analyze-button" type="submit">Go</button>
+            <br>
+        </form>
+        <br>
+        <a href="/top_words" class="top-words-link">Summary Statistics</a>
+    </div>
+
+    <div class="footer">
+        <i><a href="https://github.com/whitson-buck">Created by Whitson Buck</a></i>
+    </div>
+</body>
+</html>
