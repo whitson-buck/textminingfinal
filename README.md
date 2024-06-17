@@ -1,8 +1,8 @@
-# 🍷 Wine Sentiment Analysis Project 📊
+# Wine Sentiment Analysis Project 🍷
 
 Welcome to the Wine Sentiment Analysis Project! I'm on a quest to unravel the juicy secrets hidden within wine reviews, blending the refined critiques of experts with the unfiltered opinions of enthusiasts. Let's dive into the juicy swirl of sentiments. 🌟
 
-## 🚀 Project Journey 🍇
+## Project Journey 🍇
 
 1. **Data Grapevine:**
    - The winemag csv is 'expert' data and winereviews is 'amateur' data. First obviously comes from wine magazine (https://www.kaggle.com/datasets/zynicide/wine-reviews), and the second comes from https://download.data.world/file_download/datafiniti/wine-beer-and-liquor-reviews/wine%20reviews.csv?dwr=US
@@ -23,10 +23,9 @@ Welcome to the Wine Sentiment Analysis Project! I'm on a quest to unravel the ju
 5. **User Interaction Galore:**
    - Users can swirl, sniff, and sip through sentiments, exploring trends and uncovering surprises at whittybuck.pythonanywhere.com
    - future note: I am cheap and don't want to pay for hosting, so if the website is down message me here to let me know and I can refresh the site.
+  
+### p.s. and final addendum 🌃
 
-6. **p.s. and final addendum:**
-   - the summary statistics page reveals this, but experts do not often show much emotion or first-person preference in their reviews. Amateurs, not confined to the verbal prison of pretentious prose, express themselves much more openly and emotionally.
-   - Thus, according to this data, amateurs are often categorized as 'liking' a certain wine more. This may not be a fair categorization, because the expert is not writing THEIR personal preference, just observing about the wine itself.
-   - Future research will need to find or create data that is a 1-1 comparison with the persons like or dislike included to make a truly fair comparison. This dataset, to my limited understanding, does not currently exist in the public. 
+the summary statistics page reveals this, but experts do not often show much emotion or first-person preference in their reviews. Amateurs, not confined to the verbal prison of pretentious prose, express themselves much more openly and emotionally. Thus, according to this data, amateurs are often categorized as 'liking' a certain wine more. This may not be a fair categorization, because the expert is not writing THEIR personal preference, just observing about the wine itself. Future research will need to find or create data that is a 1-1 comparison with the persons like or dislike included to make a truly fair comparison. This dataset, to my limited understanding, does not currently exist in the public. 
 
 *The main goal of this project was to learn Flask, refine my Python, and do a little problem solving. I hope this accomplished that.*
