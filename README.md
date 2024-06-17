@@ -29,4 +29,4 @@ Welcome to the Wine Sentiment Analysis Project! I'm on a quest to unravel the ju
    - Thus, according to this data, amateurs are often categorized as 'liking' a certain wine more. This may not be a fair categorization, because the expert is not writing THEIR personal preference, just observing about the wine itself.
    - Future research will need to find or create data that is a 1-1 comparison with the persons like or dislike included to make a truly fair comparison. This dataset, to my limited understanding, does not currently exist in the public. 
 
-  /*The main goal of this project was to learn Flask, refine my Python, and do a little problem solving. I hope this accomplished that.*/
+*The main goal of this project was to learn Flask, refine my Python, and do a little problem solving. I hope this accomplished that.*
